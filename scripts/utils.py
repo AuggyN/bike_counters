@@ -18,7 +18,7 @@ def get_cv(X, y, random_state=0):
         yield train_idx, rng.choice(test_idx, size=len(test_idx) // 3, replace=False)
 
 
-def get_train_data(path="data/train.parquet"):
+def get_train_data(path="../data//train.parquet"):
     data = pd.read_parquet(path)
     # Sort by date first, so that time based cross-validation would produce correct results
     data = data.sort_values(["date", "counter_name"])
