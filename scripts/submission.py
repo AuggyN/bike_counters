@@ -48,7 +48,6 @@ vacation_paris_2020 = [
     ("2021-04-17", "2021-05-02"), 
     ("2021-07-06", "2021-08-31"), 
 ]
-
 vacation_paris_2020 = [(pd.to_datetime(start), pd.to_datetime(end)) for start, end in vacation_paris_2020]
 
 def encode_vacation(X, vacation=vacation_paris_2020):
@@ -115,8 +114,10 @@ def lockdown_curfew_encoder(X, lockdown=lockdown, curfew=curfew):
         X["is_lockdown"] |= (X["date"] >= start) & (X["date"] <= end)
 
     for start, end, start_hour, end_hour, label in curfew:
-        X["is_curfew"] |= ((X["date"] >= start) & (X["date"] <= end) & ((X["date"].dt.time >= pd.to_datetime(start_hour).time()) | (X["date"].dt.time <= pd.to_datetime(end_hour).time()))
-            
+        X["is_curfew"] |= ((X["date"] >= start) & (X["date"] <= end) & 
+                           ((X["date"].dt.time >= pd.to_datetime(start_hour).time()) | 
+                            (X["date"].dt.time <= pd.to_datetime(end_hour).time())))
+    return X
 
 
 weather_file_path = "../external_data/external_data.csv"
